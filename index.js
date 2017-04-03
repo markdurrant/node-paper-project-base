@@ -1,6 +1,6 @@
 var paper = require('paper');
 
-var util = require('./util.js');
+var fu = require('./fileUtil.js');
 var a4 = require('./a4.js');
 
 with (paper) {
@@ -19,11 +19,7 @@ with (paper) {
   });
 
   var svg = project.exportSVG({asString: true, matchShapes: true});
-      svg = util.addEncoding(svg);
-      svg = util.addUnitsToSvg(svg, a4.units);
 
-	var html = '<!doctype html><html lang="en"><head><meta charset="utf-8"></head><body>' + svg + '</body></html>';
-
-  util.writeToFile('./svg/paperSVG.svg', svg);
-  util.writeToFile('./index.html', html);
+  fu.outputToSvg('./svg/paperSVG.svg', svg, a4.units);
+  fu.outputToHtml('./index.html', svg, a4.units);
 }
