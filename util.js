@@ -6,7 +6,7 @@ exports.writeToFile = function (file, content) {
     if (err) throw err;
     console.log('Saved ' + file + ' ✔');
   });
-}
+};
 
 exports.addUnitsToSvg = function(svg, units) {
   var rx = /width="([0-9]+)" height="([0-9]+)"/;
@@ -15,7 +15,9 @@ exports.addUnitsToSvg = function(svg, units) {
             '" height="' + svg.match(rx)[2] + units +
             '" viewbox="0 0 ' + svg.match(rx)[1] + ' ' + svg.match(rx)[2] + '"';
 
-  svg = svg.replace(rx, attr);
+  return svg.replace(rx, attr);
+};
 
-  return svg;
-}
+exports.addEncoding = function(svg) {
+  return '<?xml version="1.0" encoding="utf-8"?>' + svg;
+};
