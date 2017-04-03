@@ -24,6 +24,6 @@ with (paper) {
 
 	var html = '<!doctype html><html lang="en"><head><meta charset="utf-8"></head><body>' + svg + '</body></html>';
 
-  util.writeToFile('./output/out.svg', svg);
+  util.writeToFile('./svg/paperSVG.svg', svg);
   util.writeToFile('./index.html', html);
 }
