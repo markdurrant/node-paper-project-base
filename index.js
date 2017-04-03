@@ -5,6 +5,11 @@ var fUil = require('./fileUtils.js');
 var pUtil = require('./paperUtils.js');
 var a4 = require('./a4.js');
 
+var pen = require('./pens.js');
+
+console.log(pen.thick.red);
+console.log(pen.thin.red);
+
 with (paper) {
   paper.setup(new Size(a4.portrait.x, a4.portrait.y));
 
@@ -21,8 +26,8 @@ with (paper) {
 
   var dotArray = [];
 
-  for(var i = 0; i < 1000; i++) {
-    dotArray.push(pUtil.getBestCandidateRandom(dotArray, 25, from, to));
+  for(var i = 0; i < 10; i++) {
+    dotArray.push(pUtil.getBestCandidateRandom(dotArray, 1, from, to));
   }
 
   dotArray = _.sortBy(dotArray, ['y']);
