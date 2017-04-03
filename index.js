@@ -1,4 +1,5 @@
 var paper = require('paper');
+var _ = require('lodash');
 
 var fUil = require('./fileUtils.js');
 var pUtil = require('./paperUtils.js');
@@ -15,9 +16,11 @@ with (paper) {
 
   var dotArray = [];
 
-  for(var i = 0; i < 500; i++) {
-    dotArray.push(pUtil.getBestCandidateRandom(dotArray, 100, view.bounds.topLeft, view.bounds.bottomRight));
+  for(var i = 0; i < 10; i++) {
+    dotArray.push(pUtil.getBestCandidateRandom(dotArray, 1, view.bounds.topLeft, view.bounds.bottomRight));
   }
+
+  dotArray = _.sortBy(dotArray, ['y']);
 
   dotArray.forEach(function(point) {
     new Path.Circle({
