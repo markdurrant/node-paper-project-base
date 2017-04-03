@@ -21,5 +21,5 @@ with (paper) {
   var svg = project.exportSVG({asString: true, matchShapes: true});
 
   fu.outputToSvg('./svg/paperSVG.svg', svg, a4.units);
-  fu.outputToHtml('./index.html', svg, a4.units);
+  fu.outputToHtml('./index.html', svg);
 }
