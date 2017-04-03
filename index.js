@@ -14,19 +14,28 @@ with (paper) {
     strokeColor: 'grey'
   });
 
+  var gold = (1 + Math.sqrt(5)) / 2;
+
+  var from = new Point(view.bounds.width / gold / 4, view.bounds.height / gold / 4);
+  var to = new Point(view.bounds.width / gold / 2 + view.bounds.width / gold / 4, view.bounds.height / gold / 2 + view.bounds.height / gold / 4);
+
   var dotArray = [];
 
-  for(var i = 0; i < 10; i++) {
-    dotArray.push(pUtil.getBestCandidateRandom(dotArray, 1, view.bounds.topLeft, view.bounds.bottomRight));
+  for(var i = 0; i < 1000; i++) {
+    dotArray.push(pUtil.getBestCandidateRandom(dotArray, 25, from, to));
   }
 
   dotArray = _.sortBy(dotArray, ['y']);
 
-  dotArray.forEach(function(point) {
-    new Path.Circle({
-      center: point,
-      radius: 1,
-      strokeColor: 'blue'
+  new Layer();
+
+  dotArray.forEach(function(point){
+    new Path.Line({
+      from: point,
+      to: point.add([0.1, 0]),
+      strokeWith: 1.5,
+      strokeColor: '#09f',
+      strokeCap: 'round'
     });
   });
 
