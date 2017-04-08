@@ -47,5 +47,5 @@ with (paper) {
   var svg = project.exportSVG({asString: true, matchShapes: true});
 
   fUil.outputToSvg('./svg/paperSVG.svg', svg, a4.units);
-  fUil.outputToHtml('./index.html', svg);
+  fUil.outputToHtml('./index.html', svg, a4.units);
 }
