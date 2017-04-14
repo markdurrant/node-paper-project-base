@@ -16,7 +16,7 @@
     "seed-random": "^2.2.0"
   },
   "scripts": {
-    "browser-sync": "browser-sync start --server --index 'preview/index.html' --port 4000 --no-notify",
+    "browser-sync": "browser-sync start --server --index 'preview/index.html' --files 'preview/index.html' --port 4000 --no-notify",
     "lint": "onchange '**/*.js' -- jshint --exclude ./node_modules ./ --reporter=node_modules/jshint-stylish",
     "start": "npm run lint & nodemon & npm run browser-sync"
   },
