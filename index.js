@@ -1,29 +1,15 @@
 var paper = require('paper');
 var _ = require('lodash');
-var seed = require('seed-random');
 
-var fUil = require('./fileUtils.js');
-var pUtil = require('./paperUtils.js');
+var fileUtil = require('./utilities/fileUtils.js');
+var pUtil = require('./utilities/paperUtils.js');
+var svgUtil = require('./utilities/svgUtils.js');
+var seedUtil = require('./utilities/seedUtils.js');
 
-var page = require('./page.js');
-var pen = require('./pens.js');
+var page = require('./config/pageConfig.js');
+var pen = require('./config/pensConfig.js');
 
-var mySeed = '';
-
-if(process.argv[2]) {
-  mySeed = process.argv[2];
-} else {
-  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-  for (var s = 0; s < 10; s++) {
-    mySeed = mySeed + chars.charAt(Math.random() * chars.length);
-  }
-}
-
-var now = new Date();
-var dateStr = now.getFullYear() + '-' + now.getDate() + '-' + now.getHours() + '-' + now.getMinutes() + '-' + now.getSeconds();
-
-seed(mySeed, {global: true});
+var seed = seedUtil.getSeed(process.argv[2]);
 
 with (paper) {
   paper.setup(new Size(page.portrait.x, page.portrait.y));
@@ -44,7 +30,8 @@ with (paper) {
   }
 
   var svg = project.exportSVG({asString: true, matchShapes: true});
+      svg = svgUtil.addEncoding(svgUtil.addUnits(svg));
 
-  fUil.outputToSvg('./svg/' + mySeed + '-' + dateStr + '.svg', svg, page.units);
-  fUil.outputToHtml('./index.html', svg, page.units);
+  fileUtil.outputToSvg('test', svg, seed);
+  fileUtil.outputToHtml(svg);
 }
