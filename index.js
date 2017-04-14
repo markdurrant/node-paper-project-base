@@ -5,7 +5,7 @@ var seed = require('seed-random');
 var fUil = require('./fileUtils.js');
 var pUtil = require('./paperUtils.js');
 
-var a4 = require('./a4.js');
+var page = require('./page.js');
 var pen = require('./pens.js');
 
 var mySeed = '';
@@ -26,7 +26,7 @@ var dateStr = now.getFullYear() + '-' + now.getDate() + '-' + now.getHours() + '
 seed(mySeed, {global: true});
 
 with (paper) {
-  paper.setup(new Size(a4.portrait.x, a4.portrait.y));
+  paper.setup(new Size(page.portrait.x, page.portrait.y));
 
   var border = new Path.Rectangle({
     from: [0, 0],
@@ -45,6 +45,6 @@ with (paper) {
 
   var svg = project.exportSVG({asString: true, matchShapes: true});
 
-  fUil.outputToSvg('./svg/' + mySeed + '-' + dateStr + '.svg', svg, a4.units);
-  fUil.outputToHtml('./index.html', svg, a4.units);
+  fUil.outputToSvg('./svg/' + mySeed + '-' + dateStr + '.svg', svg, page.units);
+  fUil.outputToHtml('./index.html', svg, page.units);
 }
