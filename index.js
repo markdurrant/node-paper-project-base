@@ -10,6 +10,8 @@ var pen = require('./config/pensConfig.js');
 
 var seed = seedUtil.getSeed(process.argv[2]);
 
+// -----------------------------------------------------------------------------
+
 with (paper) {
   paper.setup(new Size(page.x, page.y));
 
@@ -29,8 +31,11 @@ with (paper) {
   }
 
   var svg = project.exportSVG({asString: true, matchShapes: true});
-      svg = svgUtil.addEncoding(svgUtil.addUnits(svg, page.units));
-
-  fileUtil.outputToSvg('test', svg, seed);
-  fileUtil.outputToHtml(svg);
 }
+
+// -----------------------------------------------------------------------------
+
+svg = svgUtil.addEncoding(svgUtil.addUnits(svg, page.units));
+
+fileUtil.outputToSvg('test', svg, seed);
+fileUtil.outputToHtml(svg);

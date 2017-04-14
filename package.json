@@ -20,6 +20,6 @@
     "cleanSvg": "rm svg/*.svg",
     "start": "npm run lint & nodemon & npm run browser-sync"
   },
-  "author": "",
+  "author": "Mark Durrant",
   "license": "ISC"
 }
