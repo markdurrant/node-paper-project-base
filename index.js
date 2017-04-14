@@ -1,7 +1,7 @@
 var paper = require('paper');
 
 var fileUtil = require('./utilities/fileUtils.js');
-var pUtil = require('./utilities/paperUtils.js');
+var paperUtil = require('./utilities/paperUtils.js');
 var svgUtil = require('./utilities/svgUtils.js');
 var seedUtil = require('./utilities/seedUtils.js');
 
