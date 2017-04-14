@@ -1,5 +1,4 @@
 var paper = require('paper');
-var _ = require('lodash');
 
 var fileUtil = require('./utilities/fileUtils.js');
 var pUtil = require('./utilities/paperUtils.js');
