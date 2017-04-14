@@ -18,6 +18,7 @@
   "scripts": {
     "browser-sync": "browser-sync start --server --index 'preview/index.html' --files 'preview/index.html' --port 4000 --no-notify",
     "lint": "onchange '**/*.js' -- jshint --exclude ./node_modules ./ --reporter=node_modules/jshint-stylish",
+    "cleanSvg": "rm svg/*.svg",
     "start": "npm run lint & nodemon & npm run browser-sync"
   },
   "author": "",
