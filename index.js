@@ -15,12 +15,6 @@ var seed = seedUtil.getSeed(process.argv[2]);
 with (paper) {
   paper.setup(new Size(page.x, page.y));
 
-  new Path.Rectangle({
-    from: [0, 0],
-    to: view.bounds.bottomRight,
-    strokeColor: 'black'
-  });
-
   for (var i = 0; i < 10; i++) {
     new Path.Circle({
       radius: 2,

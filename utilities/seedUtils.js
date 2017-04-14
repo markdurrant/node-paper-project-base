@@ -1,19 +1,19 @@
-var seed = require('seed-random');
+var seedRandom = require('seed-random');
 
 exports.getSeed = function(seedArg) {
-  var mySeed = '';
+  var seed = '';
 
   if(seedArg) {
-    mySeed = seedArg;
+    seed = seedArg;
   } else {
     var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     for (var s = 0; s < 10; s++) {
-      mySeed = mySeed + chars.charAt(Math.random() * chars.length);
+      seed = seed + chars.charAt(Math.random() * chars.length);
     }
   }
 
-  seed(mySeed, {global: true});
+  seedRandom(seed, {global: true});
 
-  return mySeed;
+  return seed;
 };
