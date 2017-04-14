@@ -6,8 +6,8 @@ exports.addUnits = function(svg, units) {
             '" viewbox="0 0 ' + svg.match(regEx)[1] + ' ' + svg.match(regEx)[2] + '"';
 
   return svg.replace(regEx, attr);
-}
+};
 
 exports.addEncoding = function(svg) {
   return '<?xml version="1.0" encoding="utf-8"?>' + svg;
-}
+};

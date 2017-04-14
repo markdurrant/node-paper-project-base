@@ -16,4 +16,4 @@ exports.getSeed = function(seedArg) {
   seed(mySeed, {global: true});
 
   return mySeed;
-}
+};
