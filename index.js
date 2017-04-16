@@ -56,7 +56,6 @@ with (paper) {
   });
 
   waveLine.smooth({type: 'geometric', factor: 0.4});
-  // waveLine.smooth();
 
   var moveUpAndWobble = function(segment) {
     segment.point.y = segment.point.y - Math.random() * 2.5 - i * 0.35;
