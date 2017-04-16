@@ -32,7 +32,7 @@ with (paper) {
 
   var wavePoints = [];
 
-  for(var i = 0; i < 10 ; i++) {
+  for(var i = 0; i < 12 ; i++) {
     wavePoints.push(bestCandidate(
       wavePoints,
       15,
@@ -53,14 +53,17 @@ with (paper) {
     style: pen.thick.black
   });
 
-  waveLine.smooth({type: 'catmull-rom'});
+  waveLine.smooth({type: 'geometric', factor: 0.4});
+  // waveLine.smooth();
 
-  for (var i = 0; i < 33; i ++) {
+  var moveUpAndWobble = function(segment) {
+    segment.point.y = segment.point.y - Math.random() * 2.5 - i * 0.35;
+  };
+
+  for (var i = 0; i < 26; i ++) {
     var copy = project.activeLayer.lastChild.clone();
 
-    copy.segments.forEach(function(s){
-      s.point.y = s.point.y - Math.random() * 1.5 - i * 0.25;
-    });
+    copy.segments.forEach(moveUpAndWobble);
   }
 
   var svg = project.exportSVG({asString: true});
