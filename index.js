@@ -73,5 +73,5 @@ with (paper) {
 
 svg = svgUtil.addEncoding(svgUtil.addUnits(svg, page.units));
 
-fileUtil.outputToSvg('test', svg, seed);
+fileUtil.outputToSvg('WAVE', svg, seed);
 fileUtil.outputToHtml(svg);
