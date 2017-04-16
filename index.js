@@ -28,10 +28,10 @@ with (paper) {
     style: pen.thin.cyan
   };
 
-  var gridLayer = new Layer;
+  var gridLayer = new Layer();
   drawGrid(grid);
 
-  var waveLayer = new Layer;
+  var waveLayer = new Layer();
   var wavePoints = [];
 
   for(var i = 0; i < 12 ; i++) {
