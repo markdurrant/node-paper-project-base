@@ -12,15 +12,16 @@
 	- What it does
 	- What files/dirs do what
 	- Plotter/paper/pen holder info?
-* Add probability 
-	- Look into probability library 
-	- Impliment above 
-	- Test drawing
+* ~~Add probability~~ (only using exponential for now)
+	- ~~Look into probability library~~ 
+	- ~~Impliment above~~ 
+	- ~~Test drawing~~
 * Add gallery preview
 	- Set up node to render markup
 	- Set up styles
 	- Use flex-box 
 	- JS for single view
 	- Use template literals?
-	
+* Add subtract pathfinder functions for lines
+
 	
