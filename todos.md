@@ -6,7 +6,7 @@
 	- Convert `var` to `let` & `const`
 	- Use template literals
 * Keep master clean
-	- Remove Wave index stuff
+	- ~~Remove Wave index stuff~~
 * Write readme
 	- How to run (anything else but `npm i` needed ?)
 	- What it does
