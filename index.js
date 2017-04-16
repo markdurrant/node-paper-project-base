@@ -19,12 +19,12 @@ with (paper) {
   paper.setup(new Size(page.x, page.y));
 
   var grid = {
-    top: 40,
+    top: 73.5,
     left: 60,
-    columns: 9,
-    rows: 15,
-    cellWidth: 10,
-    cellHeight: 10,
+    columns: 18,
+    rows: 30,
+    cellWidth: 5,
+    cellHeight: 5,
     style: pen.thin.cyan
   };
 
@@ -32,18 +32,14 @@ with (paper) {
 
   var wavePoints = [];
 
-  for(var i = 0; i < 5; i++) {
+  for(var i = 0; i < 10 ; i++) {
     wavePoints.push(bestCandidate(
       wavePoints,
       15,
-      new Point(grid.left, grid.top + grid.rows * grid.cellHeight),
-      new Point(grid.left + grid.columns * grid.cellWidth, grid.top + grid.rows * grid.cellHeight)
+      new Point(grid.left + 5, grid.top + grid.rows * grid.cellHeight),
+      new Point(grid.left + grid.columns * grid.cellWidth - 5, grid.top + grid.rows * grid.cellHeight)
     ));
   }
-
-  wavePoints.forEach(function(p) {
-    p.y = p.y + Math.random() * -2 + 1;
-  });
 
   wavePoints.push(
     new Point(grid.left, grid.top + grid.rows * grid.cellHeight),
@@ -54,19 +50,17 @@ with (paper) {
 
   var waveLine = new Path({
     segments: wavePoints,
-    style: pen.thick.pink
+    style: pen.thick.black
   });
 
   waveLine.smooth({type: 'catmull-rom'});
 
-  for (var i = 0; i < 50; i ++) {
-    var copy = waveLine.clone();
+  for (var i = 0; i < 33; i ++) {
+    var copy = project.activeLayer.lastChild.clone();
 
     copy.segments.forEach(function(s){
-      s.point.y = s.point.y + Math.random() * -2;
+      s.point.y = s.point.y - Math.random() * 1.5 - i * 0.25;
     });
-
-    copy.position.y = copy.position.y - i * 3;
   }
 
   var svg = project.exportSVG({asString: true});
