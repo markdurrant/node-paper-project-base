@@ -22,6 +22,10 @@
 	- Use flex-box 
 	- JS for single view
 	- Use template literals?
-* Add subtract pathfinder functions for lines
+* Drawing functions 
+- Add subtract pathfinder functions for lines
+- Add hatching function(s)
+- Add wiggle function(s)
+* Import & modify paths examples
 
 	
