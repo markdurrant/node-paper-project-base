@@ -16,19 +16,19 @@ with (paper) {
 
   var cont = new Path.Rectangle({
     point: new Point(40, 40),
-    size: new Size(40, 70),
+    size: new Size(50, 100),
     fillColor: '#eee'
   });
 
-  var hatch = function(topLeft, width, height, spacing, offset, style) {
-    var xI = width / spacing;
-    var yI = height / spacing;
+  var hatch = function(topLeft, width, height, spacing, style) {
+    var w = width / spacing;
+    var h = height / spacing;
 
-    for(var l = 0; l < (width + height) / spacing; l++) {
-      var x1 = Math.max(0, l - yI) * spacing;
-      var y1 = ((l < yI) ? l : yI) * spacing;
-      var x2 = ((l < xI) ? l : xI) * spacing;
-      var y2 = Math.max(0, l - xI) * spacing;
+    for(var l = 0; l <= (width + height) / spacing; l++) {
+      var x1 = ((l - h < 0) ? 0 : l - h) * spacing;
+      var y1 = ((l < h) ? l : h) * spacing;
+      var x2 = ((l < w) ? l : w) * spacing;
+      var y2 = ((l - w < 0) ? 0 : l - w) * spacing;
 
       var line = new Path.Line({
         from: new Point(x1, y1).add(topLeft),
@@ -38,7 +38,27 @@ with (paper) {
     }
   };
 
-  hatch(cont.point, cont.size.width, cont.size.height, 1.5, 2, pen.thin.lightBlue);
+  // var hatch = function(topLeft, width, height, spacing, style) {
+  //   var w = width / spacing;
+  //   var h = height / spacing;
+
+  //   for(var l = 0; l <= (width + height) / spacing; l++) {
+  //     var x1 = ((l < w) ? l : w) * spacing;
+  //     var y1 = ((l <= w) ? h : w + h - l) * spacing;
+  //     var x2 = ((l < h) ? 0 : l - h) * spacing;
+  //     var y2 = ((h - l < 0) ? 0 : h - l) * spacing;
+
+  //     console.log(l + ': X1: ' + x1 + ' |  Y1: ' + y1 + ' ||| X2: ' + x2 + ' |  Y2: ' + y2);
+
+  //     var line = new Path.Line({
+  //       from: new Point(x1, y1).add(topLeft),
+  //       to: new Point(x2, y2).add(topLeft),
+  //       style: style
+  //     });
+  //   }
+  // };
+
+  hatch(cont.point, cont.size.width, cont.size.height, 2, pen.thin.orange);
 
   var svg = project.exportSVG({asString: true});
 }
