@@ -24,7 +24,8 @@
 	- Use template literals?
 * Drawing functions 
 - Add subtract pathfinder functions for lines
-- Add hatching function(s)
+- ~~Add hatching function(s~~)
+	- using hatching function in grid function
 - Add wiggle function(s)
 * Import & modify paths examples
 
