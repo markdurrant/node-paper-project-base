@@ -60,7 +60,6 @@ with (paper) {
   var dashGroup1 = new Group();
   var dashGroup2 = new Group();
 
-
   var drawDash = function(point) {
     var angle = center.subtract(point).angle;
     var length = center.subtract(point).length;
@@ -85,13 +84,17 @@ with (paper) {
     dashPoints.push(point);
   };
 
-  for(var i = 0; i < 2500; i++) {
-    drawDash(bestCandidate(dashPoints, 5));
+  for(var i = 0; i < 100; i++) {
+    var bcPoint = bestCandidate(dashPoints, 1);
+
+    if(bcPoint.x > 20 && bcPoint.x < view.bounds.width - 20 && bcPoint.y < view.bounds.width - 20 && bcPoint.y > -60) {
+      drawDash(bcPoint);
+    }
   }
 
   dashGroup1.style = pen.thick.black;
   dashGroup2.style = pen.thick.lightBlue;
-  // dashGroup2.blendMode = 'multiply';
+  dashGroup2.blendMode = 'multiply';
 
   var svg = project.exportSVG({asString: true});
 }
@@ -100,5 +103,5 @@ with (paper) {
 
 svg = svgUtil.addEncoding(svgUtil.addUnits(svg, page.units));
 
-fileUtil.outputToSvg('WAVE', svg, seed);
+fileUtil.outputToSvg('ECLIPSE', svg, seed);
 fileUtil.outputToHtml(svg);
