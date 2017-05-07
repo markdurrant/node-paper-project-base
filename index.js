@@ -10,12 +10,20 @@ var pen = require('./config/pensConfig.js');
 var closest = require('./drawing/closest.js');
 var exponential = require('./drawing/exponential.js');
 
+var _ = require('lodash');
+
 var seed = seedUtil.getSeed(process.argv[2]);
 
 // -----------------------------------------------------------------------------
 
 with (paper) {
   paper.setup(new Size(page.x, page.y));
+
+  new Path.Rectangle({
+    from: [0, 0],
+    to: view.bounds.bottomRight,
+    style: pen.thin.grey
+  });
 
   var center = new Point(view.bounds.center.x, view.bounds.width / 2);
   var innerRadius = view.bounds.width / 7;
@@ -32,7 +40,7 @@ with (paper) {
 
   var bestCandidate = function(pointArray, itterations) {
     var randomPoint;
-    var exp = exponential(2.5);
+    var exp = exponential(5);
 
     if (pointArray.length === 0) {
       randomPoint = pointFromVector(center, Math.random() * 360, exp * (outerRadius - innerRadius) + innerRadius);
@@ -84,16 +92,19 @@ with (paper) {
     dashPoints.push(point);
   };
 
-  for(var i = 0; i < 100; i++) {
-    var bcPoint = bestCandidate(dashPoints, 1);
+  for(var i = 0; i < 1500; i++) {
+    var bcPoint = bestCandidate(dashPoints, 3);
 
     if(bcPoint.x > 20 && bcPoint.x < view.bounds.width - 20 && bcPoint.y < view.bounds.width - 20 && bcPoint.y > -60) {
       drawDash(bcPoint);
     }
   }
 
+  dashGroup1.children = _.sortBy(dashGroup1.children, [function(c) {return c.firstSegment.point.y;}]);
+  dashGroup2.children = _.sortBy(dashGroup2.children, [function(c) {return c.firstSegment.point.y;}]);
+
   dashGroup1.style = pen.thick.black;
-  dashGroup2.style = pen.thick.lightBlue;
+  dashGroup2.style = pen.thick.pink;
   dashGroup2.blendMode = 'multiply';
 
   var svg = project.exportSVG({asString: true});
@@ -103,5 +114,5 @@ with (paper) {
 
 svg = svgUtil.addEncoding(svgUtil.addUnits(svg, page.units));
 
-fileUtil.outputToSvg('ECLIPSE', svg, seed);
+fileUtil.outputToSvg('ECLIPSE-2', svg, seed);
 fileUtil.outputToHtml(svg);
