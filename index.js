@@ -9,6 +9,7 @@ var pen = require('./config/pensConfig.js');
 
 var closest = require('./drawing/closest.js');
 var exponential = require('./drawing/exponential.js');
+var hatch = require('./drawing/hatch.js');
 
 var _ = require('lodash');
 
@@ -25,87 +26,28 @@ with (paper) {
     style: pen.thin.grey
   });
 
-  var center = new Point(view.bounds.center.x, view.bounds.width / 2);
-  var innerRadius = view.bounds.width / 7;
-  var outerRadius = view.bounds.width / 2;
+  var myCirclesGroup = new Group([
+    new Path.Circle({
+      center: view.bounds.center,
+      radius: view.bounds.width / 4
+    }),
+    new Path.Circle({
+      center: view.bounds.center,
+      radius: view.bounds.width / 4 - 7
+    }),
+    new Path.Circle({
+      center: view.bounds.center,
+      radius: view.bounds.width / 4 - 14
+    })
+  ]).style = pen.thick.lightBlue;
 
-  var pointFromVector = function(origin, angle, length) {
-    angle = angle * Math.PI / 180;
+  var mySquare = new Path.Rectangle({
+    from: view.bounds.center.subtract(view.bounds.width / 5),
+    to: view.bounds.center.add(view.bounds.width / 5),
+    style: pen.thick.pink
+  });
 
-    var x = origin.x + Math.cos(angle) * length;
-    var y = origin.y + Math.sin(angle) * length;
-
-    return new Point(x, y);
-  };
-
-  var bestCandidate = function(pointArray, itterations) {
-    var randomPoint;
-    var exp = exponential(5);
-
-    if (pointArray.length === 0) {
-      randomPoint = pointFromVector(center, Math.random() * 360, exp * (outerRadius - innerRadius) + innerRadius);
-    } else {
-      var bestCandidate, bestDistance = 0;
-
-      for(var i = 0; i < itterations; i++) {
-        var candidate = pointFromVector(center, Math.random() * 360, exp * (outerRadius - innerRadius) + innerRadius);
-        var distance = candidate.getDistance(closest(candidate, pointArray));
-
-        if (distance > bestDistance) {
-          bestDistance = distance;
-          bestCandidate = candidate;
-        }
-      }
-
-      randomPoint = bestCandidate;
-    }
-
-    return randomPoint;
-  };
-
-  var dashPoints = [];
-  var dashLength = 2;
-  var dashGroup1 = new Group();
-  var dashGroup2 = new Group();
-
-  var drawDash = function(point) {
-    var angle = center.subtract(point).angle;
-    var length = center.subtract(point).length;
-
-    var p1 = pointFromVector(center, angle, length);
-    var p2 = pointFromVector(center, angle, length + dashLength);
-
-    var dash = new Path.Line({
-      from: p1,
-      to: p2,
-      blendMode: 'multiply'
-    });
-
-    dash.rotate(Math.random() * 30 - 15);
-
-    if (Math.random() < 0.5) {
-      dashGroup1.addChild(dash);
-    } else {
-      dashGroup2.addChild(dash);
-    }
-
-    dashPoints.push(point);
-  };
-
-  for(var i = 0; i < 1500; i++) {
-    var bcPoint = bestCandidate(dashPoints, 3);
-
-    if(bcPoint.x > 20 && bcPoint.x < view.bounds.width - 20 && bcPoint.y < view.bounds.width - 20 && bcPoint.y > -60) {
-      drawDash(bcPoint);
-    }
-  }
-
-  dashGroup1.children = _.sortBy(dashGroup1.children, [function(c) {return c.firstSegment.point.y;}]);
-  dashGroup2.children = _.sortBy(dashGroup2.children, [function(c) {return c.firstSegment.point.y;}]);
-
-  dashGroup1.style = pen.thick.black;
-  dashGroup2.style = pen.thick.pink;
-  dashGroup2.blendMode = 'multiply';
+  // console.log(mySquare);
 
   var svg = project.exportSVG({asString: true});
 }
