@@ -13,7 +13,8 @@
     "nodemon": "^1.11.0",
     "onchange": "^3.2.1",
     "paper": "^0.10.3",
-    "seed-random": "^2.2.0"
+    "seed-random": "^2.2.0",
+    "voronoi": "^1.0.0"
   },
   "scripts": {
     "browser-sync": "browser-sync start --server --index 'preview/index.html' --files 'preview/index.html' --port 4000 --no-notify",
