@@ -7,11 +7,8 @@ var seedUtil = require('./utilities/seedUtils.js');
 var page = require('./config/pageConfig.js');
 var pen = require('./config/pensConfig.js');
 
-var closest = require('./drawing/closest.js');
-var exponential = require('./drawing/exponential.js');
-var hatch = require('./drawing/hatch.js');
-
-var _ = require('lodash');
+var intersect = require('./drawing/lineIntersect.js');
+var cutOut = require('./drawing/lineCutOut.js');
 
 var seed = seedUtil.getSeed(process.argv[2]);
 
@@ -26,28 +23,21 @@ with (paper) {
     style: pen.thin.grey
   });
 
-  var myCirclesGroup = new Group([
-    new Path.Circle({
-      center: view.bounds.center,
-      radius: view.bounds.width / 4
-    }),
-    new Path.Circle({
-      center: view.bounds.center,
-      radius: view.bounds.width / 4 - 7
-    }),
-    new Path.Circle({
-      center: view.bounds.center,
-      radius: view.bounds.width / 4 - 14
-    })
-  ]).style = pen.thick.lightBlue;
-
   var mySquare = new Path.Rectangle({
     from: view.bounds.center.subtract(view.bounds.width / 5),
     to: view.bounds.center.add(view.bounds.width / 5),
-    style: pen.thick.pink
+    style: pen.thin.lightGrey
   });
 
-  // console.log(mySquare);
+  var myLine = new Path.Line({
+    from: view.bounds.center.subtract([0, 100]),
+    to: view.bounds.center.add([0, 100]),
+    style: pen.thin.cyan
+  });
+
+  myLine.rotate(45, view.bounds.center);
+
+  cutOut(myLine, mySquare);
 
   var svg = project.exportSVG({asString: true});
 }
