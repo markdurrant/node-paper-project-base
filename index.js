@@ -7,7 +7,10 @@ var seedUtil = require('./utilities/seedUtils.js');
 var page = require('./config/pageConfig.js');
 var pen = require('./config/pensConfig.js');
 
-var bestCandidate = require('./drawing/bestCandidate.js');
+// var bestCandidate = require('./drawing/bestCandidate.js');
+//
+var closest = require('./drawing/closest.js');
+var exponential = require('./drawing/exponential.js');
 
 var Voronoi = require('voronoi');
 
@@ -23,24 +26,62 @@ with (paper) {
     to: view.bounds.bottomRight
   });
 
-  var topLeft = new Point(20, 20);
-  var bottomRight = new Point(view.bounds.width - 20, view.bounds.height - 20);
+  var center = view.bounds.center;
+  var innerRadius = view.bounds.width / 10;
+  var outerRadius = view.bounds.width / 2;
+
+  var myPoints = [];
+
+  var pointFromVector = function(origin, angle, length) {
+    angle = angle * Math.PI / 180;
+
+    var x = origin.x + Math.cos(angle) * length;
+    var y = origin.y + Math.sin(angle) * length;
+
+    return new Point(x, y);
+  };
+
+  var bestCandidate = function(pointArray, itterations) {
+    var randomPoint;
+    var exp = exponential(2.5);
+
+    if (pointArray.length === 0) {
+      randomPoint = pointFromVector(center, Math.random() * 360, exp * (outerRadius - innerRadius) + innerRadius);
+    } else {
+      var bestCandidate, bestDistance = 0;
+
+      for(var i = 0; i < itterations; i++) {
+        var candidate = pointFromVector(center, Math.random() * 360, exp * (outerRadius - innerRadius) + innerRadius);
+        var distance = candidate.getDistance(closest(candidate, pointArray));
+
+        if (distance > bestDistance) {
+          bestDistance = distance;
+          bestCandidate = candidate;
+        }
+      }
+
+      randomPoint = bestCandidate;
+    }
+
+    return randomPoint;
+  };
+
+  for(var i = 0; i < 5000; i++) {
+    myPoints.push(bestCandidate(myPoints, 5));
+  }
+
+  var topLeft = new Point(30, 30);
+  var bottomRight = new Point(view.bounds.width - 30, view.bounds.height - 30);
 
   var voronoi = new Voronoi();
 
   var bbox = {xl: topLeft.x, xr: bottomRight.x, yt: topLeft.y, yb: bottomRight.y};
 
-  var sites = [];
-
-  for (var p = 0; p < 100; p++) {
-    sites.push(bestCandidate(sites, 2, topLeft, bottomRight));
-  }
-
-  var diagram = voronoi.compute(sites, bbox);
+  var diagram = voronoi.compute(myPoints, bbox);
 
   diagram.cells.forEach(function(cell) {
     var cellPath = new Path({
-      style: pen.thick.pink,
+      style: pen.thin.lightBlue,
       closed: true
     });
 
